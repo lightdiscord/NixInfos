@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Home from './views/Home.vue';
+import Home from './Home.vue';
 
 Vue.use(VueRouter);
 
@@ -13,9 +13,14 @@ export const Router = new VueRouter({
       component: Home,
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('./views/About.vue'),
+      path: '/packages',
+      name: 'packages',
+      component: () => import('./Packages.vue'),
+    },
+    {
+      path: '/options',
+      name: 'options',
+      component: () => import('./Options.vue'),
     },
   ],
 });
