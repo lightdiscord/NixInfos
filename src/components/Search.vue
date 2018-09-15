@@ -1,18 +1,23 @@
 <template>
   <form class="ui form inverted">
     <div class="fields">
-    <div class="five wide field">
-      <label>Search</label>
-      <input type="text" name="search" :placeholder="placeholder">
-    </div>
+      <div class="five wide field">
+        <label>Search</label>
+        <input @input="emit" ref="input" type="text" name="search" :placeholder="placeholder">
+      </div>
     </div>
   </form>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 
-export default Vue.extend({
+export default {
   props: ['placeholder'],
-});
+  methods: {
+    emit() {
+      this.$emit('input', this.$refs.input.value);
+    },
+  },
+};
 </script>
