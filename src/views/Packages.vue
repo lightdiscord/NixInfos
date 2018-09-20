@@ -13,6 +13,7 @@
 
 <script>
 import { createNamespacedHelpers as namespace } from 'vuex';
+import { showing } from '@/utils/results';
 
 import Search from '@/components/Search.vue';
 import PackageTable from '@/components/packages/Table.vue';
@@ -40,8 +41,7 @@ export default {
     ...mapGetters(['size']),
 
     showing() {
-      const { pointer, size: { matches } } = this;
-      return `${ pointer * 15 }-${ Math.min((pointer + 1) * 15, matches) } of ${ matches }`;
+      return showing(this.pointer, this.size.matches);
     },
   },
 
@@ -50,6 +50,7 @@ export default {
     ...mapMutations(['storeFilter']),
 
     listen(value) {
+      this.$refs.table.first();
       this.storeFilter(!!value ? search(value) : () => true);
     },
   },
