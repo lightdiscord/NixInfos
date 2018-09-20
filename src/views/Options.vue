@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1>Options</h1>
+    <h1 class="title is-1">Options</h1>
 
     <search placeholder="Search by name or description"></search>
 
-    <h2>Result</h2>
+    <h2 class="title is-2">Result</h2>
 
-    <table class="ui inverted compact celled table">
+    <table class="table is-hoverable is-striped is-fullwidth">
       <thead>
         <tr>
           <th>Option name</th>
@@ -19,7 +19,7 @@
           </tr>
           <tr v-if="entry.details" :key="entry">
             <td colspan="1">
-              <table class="ui definition table inverted">
+              <table class="table is-hoverable is-striped-is-fullwidth">
                 <tbody>
                   <tr>
                     <td>Description</td>
@@ -46,10 +46,12 @@
       <tfoot class="full-width">
         <tr>
           <th colspan="3">
-            <div class="ui small button secondary">First</div>
-            <div class="ui small button secondary">Previous</div>
-            <div class="ui small button secondary">Next</div>
-            <div class="ui small button secondary">Last</div>
+            <div class="buttons has-addons">
+              <div class="button">First</div>
+              <div class="button">Previous</div>
+              <div class="button">Next</div>
+              <div class="button">Last</div>
+            </div>
           </th>
         </tr>
       </tfoot>

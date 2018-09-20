@@ -1,19 +1,23 @@
 import Vue from 'vue';
-import App from './App.vue';
 import { Router as router } from './views';
 import store from './store';
-import { Plugin as Fragments } from 'vue-fragments';
 
 import * as ServiceWorker from '@/service-worker/register';
 
-ServiceWorker.Register();
+import { Hero, View } from './sections';
 
-Vue.use(Fragments);
+import './plugins/styles.scss';
+
+ServiceWorker.Register();
 
 Vue.config.productionTip = false;
 
-new Vue({
+const register = (section, el) => new Vue({
   router,
   store,
-  render: (h) => h(App),
-}).$mount('#app');
+  render: (h) => h(section),
+  el,
+});
+
+register(Hero, '#hero');
+register(View, '#view');

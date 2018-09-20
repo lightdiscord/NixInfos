@@ -1,13 +1,11 @@
 <template>
   <div>
-    <h1>Packages</h1>
+    <h1 class="title is-1">Packages</h1>
 
     <search @input="listen" placeholder="Search by name or description"></search>
 
-    <h2 class="ui header inverted">
-      Result
-      <div class="sub header">Showing results {{ showing }}</div>
-    </h2>
+    <h2 class="title is-2">Result</h2>
+    <span class="subtitle is-4">Showing results {{ showing }}</span>
 
     <package-table ref="table"></package-table>
   </div>

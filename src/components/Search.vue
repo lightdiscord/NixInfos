@@ -1,12 +1,10 @@
 <template>
-  <form class="ui form inverted">
-    <div class="fields">
-      <div class="five wide field">
-        <label>Search</label>
-        <input @input="emit" ref="input" type="text" name="search" :placeholder="placeholder">
-      </div>
+  <div class="field">
+    <label class="label">Search</label>
+    <div class="control">
+      <input @input="emit" ref="input" type="text" name="search" class="input" :placeholder="placeholder">
     </div>
-  </form>
+  </div>
 </template>
 
 <script>

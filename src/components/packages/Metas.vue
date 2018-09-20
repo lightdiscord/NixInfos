@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td colspan="3">
-      <table class="ui definition table inverted">
+      <table class="table is-hoverable is-striped is-fullwidth">
         <tbody class="metas">
           <tr>
             <td>Install command</td>

@@ -1,5 +1,5 @@
 <template>
-  <table class="ui inverted compact celled table">
+  <table class="table is-hoverable is-striped is-fullwidth">
     <thead>
       <tr>
         <th>Package name</th>
@@ -9,17 +9,19 @@
     </thead>
     <tbody>
       <template v-for="entry in slice(pointer)">
-        <package-head :key="entry.attribute" :package="entry" :detail="detail(entry)"></package-head>
-        <package-metas :key="`${entry.attribute}-metas`" v-if="detailled.includes(entry.attribute)" :package="entry"></package-metas>
+        <package-head :key="entry.attribute" :package="entry" :detail="detail(entry)" :class="{ 'is-selected': showMetas(entry) }"></package-head>
+        <package-metas :key="`${entry.attribute}-metas`" v-if="showMetas(entry)" :package="entry"></package-metas>
       </template>
     </tbody>
     <tfoot class="full-width">
       <tr>
         <th colspan="3">
-          <button :disabled="beginning" @click="first" class="ui small button secondary">First</button>
-          <button :disabled="beginning" @click="previous" class="ui small button secondary">Previous</button>
-          <button :disabled="end" @click="next" class="ui small button secondary">Next</button>
-          <button :disabled="end" @click="last" class="ui small button secondary">Last</button>
+          <div class="buttons has-addons">
+            <button :disabled="beginning" @click="first" class="button">First</button>
+            <button :disabled="beginning" @click="previous" class="button">Previous</button>
+            <button :disabled="end" @click="next" class="button">Next</button>
+            <button :disabled="end" @click="last" class="button">Last</button>
+          </div>
         </th>
       </tr>
     </tfoot>
@@ -80,6 +82,10 @@ export default {
 
     refresh() {
       this.detailled = [];
+    },
+
+    showMetas({ attribute }) {
+      return this.detailled.includes(attribute);
     },
   },
   components: {
