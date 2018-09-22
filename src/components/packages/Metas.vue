@@ -5,7 +5,9 @@
         <tbody class="metas">
           <tr>
             <td>Install command</td>
-            <td>{{ command }}</td>
+            <td>
+              <Code :text="command" language="console" />
+            </td>
           </tr>
           <tr>
             <td>Nix expression</td>
@@ -13,41 +15,36 @@
               <a :href="expression.url" target="_blank">{{ expression.path }}</a>
             </td>
           </tr>
-          <tr>
+          <tr v-if="platforms.length">
             <td>Platforms</td>
-            <td>{{ platforms || 'Not specified' }}</td>
+            <td>{{ platforms }}</td>
           </tr>
-          <tr>
+          <tr v-if="package.meta.homepage">
             <td>Homepage</td>
             <td>
-              <a v-if="homepage" :href="homepage">{{ homepage }}</a>
-              <template v-else>Not specified</template>
+              <a :href="package.meta.homepage">{{ package.meta.homepage }}</a>
             </td>
           </tr>
-          <tr>
+          <tr v-if="license">
             <td>License</td>
             <td>
-              <a v-if="license" :href="license.url">{{ license.name }}</a>
-              <template v-else>Not specified</template>
+              <a :href="license.url">{{ license.name }}</a>
             </td>
           </tr>
-          <tr>
+          <tr v-if="maintainers.length">
             <td>Maintainers</td>
             <td>
-              <template v-if="maintainers.length">
-                <template v-for="(maintainer, i) in maintainers">
-                  <a :href="maintainer.github" target="_blank" :key="i">{{ maintainer.name }}</a>
-                  <span :key="`${i}-email`">
-                    {{ maintainer.email | emailize }}<span v-if="maintainers.length - 1 > i">, </span>
-                  </span>
-                </template>
+              <template v-for="(maintainer, i) in maintainers">
+                <a :href="maintainer.github" target="_blank" :key="i">{{ maintainer.name }}</a>
+                <span :key="`${i}-email`">
+                  {{ maintainer.email | emailize }}<span v-if="maintainers.length - 1 > i">, </span>
+                </span>
               </template>
-              <template v-else>Not specified</template>
             </td>
           </tr>
-          <tr>
+          <tr v-if="package.meta.longDescription">
             <td>Long description</td>
-            <td>{{ description || 'Not specified' }}</td>
+            <td>{{ package.meta.longDescription }}</td>
           </tr>
         </tbody>
       </table>
@@ -56,35 +53,36 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { mapState } from 'vuex';
+import { createNamespacedHelpers as namespace } from 'vuex';
 
-export default Vue.extend({
+import Code from '@/components/Code.vue';
+
+const { mapState } = namespace('packages');
+
+export default {
   props: {
     package: Object,
   },
 
   computed: {
-    ...mapState(['packagesCommit']),
+    ...mapState(['commit']),
+
     command() {
       return `$ nix-env -iA nixos.${this.package.attribute}`;
     },
-    homepage() {
-      return this.package.meta.homepage;
-    },
-    description() {
-      return this.package.meta.longDescription;
-    },
+
     platforms() {
-      return (this.package.meta.platforms || [])
+      const platforms = (this.package.meta.platforms || [])
         .map((platform) => platform.kernel
           ? platform.kernel.name || platform.kernel.families.bsd.name
           : platform,
-        )
-        .join(', ');
+        );
+
+      return [...new Set(platforms)].join(', ');
     },
+
     expression() {
-      const commit = this.packagesCommit;
+      const commit = this.commit;
       const [path, line] = this.package.meta.position.split(':');
 
       return {
@@ -92,12 +90,13 @@ export default Vue.extend({
         path,
       };
     },
+
     license() {
-      const { license = {} } = this.package.meta;
-      const { url, spdxId: name } = license;
+      const { url, spdxId: name } = this.package.meta.license || {};
 
       return url && name && { url, name };
     },
+
     maintainers() {
       const { maintainers = [] } = this.package.meta;
 
@@ -112,7 +111,11 @@ export default Vue.extend({
   filters: {
     emailize: (email) => `<${email}>`,
   },
-});
+
+  components: {
+    Code,
+  },
+};
 </script>
 
 <style lang="stylus" scoped>
