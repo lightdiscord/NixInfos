@@ -11,6 +11,9 @@ install:
   - nix-channel --update
 
 script:
+  - df -h
+  - nix-collect-garbage -d
+  - df -h
   - "./scripts/run.sh packages nixos-unstable"
   - "./scripts/run.sh packages nixos-unstable-small"
   - "./scripts/run.sh packages nixpkgs-unstable"
