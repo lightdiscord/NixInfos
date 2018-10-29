@@ -13,4 +13,4 @@ cat $FILE | gzip -9 > $FILE.gz
 rm $FILE
 sha256sum $FILE.gz | cut -f1 -d' ' > $FILE.checksum
 
-echo $BRANCH > result/$TYPE/entries
+echo $BRANCH >> result/$TYPE/entries
