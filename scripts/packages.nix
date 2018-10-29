@@ -1,13 +1,13 @@
-{ pkgs ? import <nixpkgs> { }, channel }:
+{ pkgs ? import <nixpkgs> { } }:
 
 with pkgs.lib;
 with builtins;
 
 let
 
-  src = fetchTarball "https://github.com/nixos/nixpkgs-channels/archive/${channel}.tar.gz";
+  # src = fetchTarball "https://github.com/nixos/nixpkgs-channels/archive/${channel}.tar.gz";
   override = fetchurl https://raw.githubusercontent.com/NixOS/nixos-homepage/master/discover-more-packages-config.nix;
-  packages = import src { config = import override; };
+  packages = import <channel> { config = import override; };
 
   details = package: let
 
@@ -53,7 +53,7 @@ let
   text = toJSON chain;
 
 in pkgs.writeTextFile {
-  name = "packages-${channel}";
+  name = "packages";
 
   inherit text;
 }
