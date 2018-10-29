@@ -10,7 +10,7 @@ let
   inherit (import <channel/nixos/release.nix> {}) options;
 
 in pkgs.writeTextFile {
-  name = "options-${channel}";
+  name = "options";
 
   text = readFile "${options}/share/doc/nixos/options.json";
 }
