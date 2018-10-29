@@ -1,4 +1,4 @@
-language: minimal
+language: nix
 
 sudo: required
 
@@ -7,10 +7,6 @@ env:
     secure: ZjKyH4jaLRCkiwyRyTXM84oK2dIu5YSpzl1ckU8QtQTXB7zSG3tyfnrSlrPFonBz9/YtRFLqbjCU1G/5UddIFjsNEWzQIkq6JAPR30A42gy6lldibdotvjQpVuYXd8udYqJY6sWKvzXYWJfsE8U0g3MiilLHrzJd0hX8jdB1n4LrQzvNQdDzUc/wjx3dktQ/oyKHOSld5/KnX7XS00CHcgGIJuds3GvlturZ6jzInHFbRrncOBr4urRUUq2sQD47mnRNB+/dUdqu+wmLTvqKJ1Tt0W1t4Y87ZbAV3N5oNMORmerrjNU8nwR29dDbG1tLWzip0tYlLDJ4soo2NOaocrMYvwze7taxnb/2qT2pI6QLQ+A3OJt3m4mk+e9moV5UEZiBvvv2plKCn3YS74JE3/UfAVyg5wou80phmzqLLU8up+T6JlzRV4wVmJiz9mrQvGA8Bss2dI3C5RFX5H72VXXogyy0GHAnPyTPEYZvU93/DTx68iFCGgZCVuiUKI3NDz95hLI7JltXLe68m8BgMSN97RohiV7sd38IMbXv/wQYVu37LnlwYXMNtfHrNfg0osjtmmQvAOKFnaVNxMPtU+0rAY+GhetKWxmjLMO4vlUnvHfxrud0ulJoG2cHPp2lv56NoQJnozm0X+UZs4Mmwnv3fWHFm+eHS2cY653t2dQ=
 
 install:
-  - wget --retry-connrefused --waitretry=1 -O /tmp/nix-install https://nixos.org/releases/nix/nix-2.0.4/install
-  - yes | sh /tmp/nix-install
-  - source $HOME/.nix-profile/etc/profile.d/nix.sh
-  - nix-env --version
   - nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
   - nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
   - nix-channel --add https://nixos.org/channels/nixos-unstable-small nixos-unstable-small
@@ -28,7 +24,7 @@ script:
   - "./scripts/run.sh options nixpkgs-unstable"
 
 deploy:
-  providers: pages
+  provider: pages
   skip-cleanup: true
   github-token: "$GITHUB_TOKEN"
   on:
