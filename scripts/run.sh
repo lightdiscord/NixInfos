@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p gzip
+#! nix-shell -i bash
 
 set -e
 
@@ -9,8 +9,8 @@ BRANCH=$2
 FILE=result/$TYPE/$BRANCH
 
 nix-build scripts/$TYPE.nix -I channel=~/.nix-defexpr/channels/$BRANCH -o $FILE
-cat $FILE | gzip -9 > $FILE.gz
-rm $FILE
-sha256sum $FILE.gz | cut -f1 -d' ' > $FILE.checksum
+cp -L $FILE $FILE.tmp
+mv $FILE.tmp $FILE
+sha256sum $FILE | cut -f1 -d' ' > $FILE.checksum
 
 echo $BRANCH >> result/$TYPE/entries
