@@ -22,12 +22,12 @@ module.exports = (env = {}, argv) => {
         './styles/index.scss',
         './index.js',
       ],
+      'service-worker': './service-worker/index.js',
     },
 
     output: {
       path: path.resolve(__dirname, 'dist'),
-      publicPath: '',
-      filename: 'scripts/[name].js',
+      publicPath: '/',
       crossOriginLoading: 'anonymous',
     },
 
@@ -120,6 +120,7 @@ module.exports = (env = {}, argv) => {
         errors: true,
       },
       quiet: true,
+      historyApiFallback: true
     },
 
     plugins: (() => {

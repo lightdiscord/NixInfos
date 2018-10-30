@@ -44,5 +44,8 @@
     "webpack-dev-server": "^3.1.10",
     "webpack-subresource-integrity": "^1.2.0",
     "webpackbar": "^2.6.3"
+  },
+  "dependencies": {
+    "idb": "^2.1.3"
   }
 }
