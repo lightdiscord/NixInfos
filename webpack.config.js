@@ -101,6 +101,14 @@ module.exports = (env = {}, argv) => {
             },
           },
         },
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          loader: 'elm-webpack-loader',
+          options: {
+            optimize: isProduction
+          }
+        },
       ],
     },
 
