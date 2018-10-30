@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -8,7 +7,7 @@ BRANCH=$2
 
 FILE=result/$TYPE/$BRANCH
 
-nix-build scripts/$TYPE.nix -I channel=~/.nix-defexpr/channels/$BRANCH -o $FILE
+nix-build -I channel=~/.nix-defexpr/channels/$BRANCH -o $FILE ./scripts/$TYPE.nix
 cp -L $FILE $FILE.tmp
 mv $FILE.tmp $FILE
 sha256sum $FILE | cut -f1 -d' ' > $FILE.checksum
