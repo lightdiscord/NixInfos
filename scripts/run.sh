@@ -7,7 +7,7 @@ BRANCH=$2
 
 FILE=result/$TYPE/$BRANCH
 
-nix-build -I channel=~/.nix-defexpr/channels/$BRANCH -o $FILE ./scripts/$TYPE.nix
+nix-build scripts/$TYPE.nix -I channel=~/.nix-defexpr/channels/$BRANCH -o $FILE
 cp -L $FILE $FILE.tmp
 mv $FILE.tmp $FILE
 sha256sum $FILE | cut -f1 -d' ' > $FILE.checksum
