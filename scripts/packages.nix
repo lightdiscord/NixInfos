@@ -44,9 +44,7 @@ let
 
   collectPackages = collect (x: x ? value && x ? name);
 
-  flatten = packages: mapAttrs
-    (_: filterAttrs (n: _: n != "_type"))
-    (listToAttrs packages);
+  flatten = map (package: (filterAttrs (n: _: n != "_type") package.value) // { attribute = package.name; });
 
   chain = flatten (collectPackages (definePackages (removeEmpty (transform packages))));
 
